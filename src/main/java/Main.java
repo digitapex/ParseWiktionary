@@ -1,4 +1,10 @@
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +13,15 @@ public class Main {
         // extractAllWordsFromOriginal();
 //        extractOnlyNouns();
 //        System.out.println(NetworkUtil.getWordFormAndGender("Haus"));
+
+
         String wordsList = IOUtils.getList("lists/listNounsShort.txt");
         String[] words = IOUtils.getLines(wordsList);
         List<String> nounsVerified = new ArrayList<>();
+        File file = new File("lists/listNounsVerified.txt");
+        file.createNewFile();
+        Charset charset = StandardCharsets.ISO_8859_1;
+        int count = 0;
         for (int i = 0; i < 100; i++) {
             String word = words[i];
 
@@ -18,8 +30,11 @@ public class Main {
                 String wordForm = wordFormAndGender[0];
                 String gender = wordFormAndGender[1];
                 if (wordForm.equals("Substantiv")) {
-                    System.out.println(word);
-                    System.out.println(gender);
+                    Files.write(Paths.get(file.toString()), (word.trim() + "," + gender + "\n").getBytes(), StandardOpenOption.APPEND);
+                    count++;
+                    if (count >= 10){
+                        break;
+                    }
                 }
             } catch (Exception e) {
                 System.out.println("Word " + word + " not found");

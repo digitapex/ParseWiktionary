@@ -1,6 +1,5 @@
 
 import javafx.util.Pair;
-import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
