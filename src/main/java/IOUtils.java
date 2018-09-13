@@ -13,7 +13,6 @@ public class IOUtils {
         final int bufferSize = 1024;
         final char[] buffer = new char[bufferSize];
         final StringBuilder out = new StringBuilder();
-        // this charset works for German
         Reader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         for (; ; ) {
             int rsz = in.read(buffer, 0, buffer.length);
@@ -21,7 +20,6 @@ public class IOUtils {
                 break;
             out.append(buffer, 0, rsz);
         }
-//        System.out.println(out.toString());
         return out.toString();
     }
 
@@ -34,11 +32,6 @@ public class IOUtils {
         file.createNewFile();
         // TODO - UTF-8?
         Charset charset = StandardCharsets.ISO_8859_1;
-//        for (String word : words) {
-//            System.out.println(word);
-//
-//
-//        }
         Files.write(Paths.get(file.toString()), words, charset, StandardOpenOption.APPEND);
     }
 }

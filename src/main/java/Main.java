@@ -1,30 +1,22 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        // extractAllWordsFromOriginal();
+    public static void main(String[] args) throws IOException, InterruptedException {
+//        extractAllWordsFromOriginal();
 //        extractOnlyNouns();
-//        System.out.println(NetworkUtil.getWordFormAndGender("Haus"));
 
-
-        String wordsList = IOUtils.getList("lists/listNounsShort.txt");
+        String wordsList = IOUtils.getList("lists/listNouns.txt");
         String[] words = IOUtils.getLines(wordsList);
-        List<String> nounsVerified = new ArrayList<>();
         File file = new File("lists/listNounsVerified.txt");
         file.createNewFile();
-        Charset charset = StandardCharsets.ISO_8859_1;
         int count = 0;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < words.length; i++) {
             String word = words[i];
-
             try {
                 String[] wordFormAndGender = NetworkUtil.getWordFormAndGender(words[i]);
                 String wordForm = wordFormAndGender[0];
@@ -32,12 +24,13 @@ public class Main {
                 if (wordForm.equals("Substantiv")) {
                     Files.write(Paths.get(file.toString()), (word.trim() + "," + gender + "\n").getBytes(), StandardOpenOption.APPEND);
                     count++;
-                    if (count >= 10){
+                    System.out.println("" + count);
+                    if (count >= 10000){
                         break;
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Word " + word + " not found");
+                e.printStackTrace();
             }
         }
     }
