@@ -1,10 +1,30 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         // extractAllWordsFromOriginal();
-        extractOnlyNouns();
+//        extractOnlyNouns();
+//        System.out.println(NetworkUtil.getWordFormAndGender("Haus"));
+        String wordsList = IOUtils.getList("lists/listNounsShort.txt");
+        String[] words = IOUtils.getLines(wordsList);
+        List<String> nounsVerified = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            String word = words[i];
+
+            try {
+                String[] wordFormAndGender = NetworkUtil.getWordFormAndGender(words[i]);
+                String wordForm = wordFormAndGender[0];
+                String gender = wordFormAndGender[1];
+                if (wordForm.equals("Substantiv")) {
+                    System.out.println(word);
+                    System.out.println(gender);
+                }
+            } catch (Exception e) {
+                System.out.println("Word " + word + " not found");
+            }
+        }
     }
 
     private static void extractAllWordsFromOriginal() throws IOException {

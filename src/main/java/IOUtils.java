@@ -14,7 +14,7 @@ public class IOUtils {
         final char[] buffer = new char[bufferSize];
         final StringBuilder out = new StringBuilder();
         // this charset works for German
-        Reader in = new InputStreamReader(inputStream, StandardCharsets.ISO_8859_1);
+        Reader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         for (; ; ) {
             int rsz = in.read(buffer, 0, buffer.length);
             if (rsz < 0)
@@ -32,6 +32,7 @@ public class IOUtils {
     static void writeWordsToFile(List<String> words, String filePath) throws IOException {
         File file = new File(filePath);
         file.createNewFile();
+        // TODO - UTF-8?
         Charset charset = StandardCharsets.ISO_8859_1;
 //        for (String word : words) {
 //            System.out.println(word);
